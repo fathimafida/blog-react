@@ -1,38 +1,24 @@
-import { FaHiking } from "react-icons/fa";
+import { FaHiking, FaLock } from "react-icons/fa";
 import Hiking from "../../assets/hiking2.jpeg";
 
 import HeroSection from "./HeroSection";
 import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
+
+import { useState } from "react";
+import { MdEmail } from "react-icons/md";
+import { Checkbox } from "@nextui-org/checkbox";
+import { Link } from "react-router-dom";
 
 const BlogHome = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
+
   return (
     <div className="relative h-screen bg-cover bg-center">
-      <div className="w-full  h-16 flex  items-center justify-between  p-6 bg-transparent">
-        <div className="flex items-center gap-2">
-          <FaHiking className="text-2xl  text-black" />
-          <h2 className="text-2xl font-bold  text-black">Traveler</h2>
-        </div>
-        <div className="justify-center">
-          <ul className="flex   space-x-6 ml-8 text-black ">
-            <li>Hotel</li>
-            <li>Flight</li>
-            <li>Train</li>
-            <li>Travel</li>
-            <li>Car Rental</li>
-          </ul>
-        </div>
-        <div className="flex items-center">
-          <input
-            type="text"
-            placeholder="Search destination..."
-            className="px-4 py-2 bg-black bg-opacity-25 text-white rounded-md placeholder-white"
-          />
-        </div>
-        <div>
-          <Button className="bg-transparent text-white">Login</Button>
-          <Button className="">Sign Up</Button>
-        </div>
-      </div>
+      
       <div className="absolute inset-0 bg-black opacity-60">
         <img className="w-full h-full object-cover" src={Hiking} alt="Hiking" />
       </div>
@@ -63,8 +49,63 @@ const BlogHome = () => {
         </div>
       </div>
       <HeroSection />
+
+      <Modal
+        isOpen={isOpen}
+        onClose={handleClose}
+        placement="top-center"
+      >
+        <ModalContent>
+          {(handleClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+              <ModalBody>
+                <Input
+                  autoFocus
+                  endContent={
+                    <MdEmail className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                  }
+                  label="Email"
+                  placeholder="Enter your email"
+                  variant="bordered"
+                />
+                <Input
+                  endContent={
+                    <FaLock className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                  }
+                  label="Password"
+                  placeholder="Enter your password"
+                  type="password"
+                  variant="bordered"
+                />
+                <div className="flex py-2 px-1 justify-between">
+                  <Checkbox
+                    classNames={{
+                      label: "text-small",
+                    }}
+                  >
+                    Remember me
+                  </Checkbox>
+                  <Link color="primary" href="#" size="sm">
+                    Forgot password?
+                  </Link>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={handleClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={handleClose}>
+                  Sign in
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
 
 export default BlogHome;
+
