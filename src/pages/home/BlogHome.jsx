@@ -10,6 +10,7 @@ import { useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { Checkbox } from "@nextui-org/checkbox";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/NavBar";
 
 const BlogHome = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +19,12 @@ const BlogHome = () => {
 
   return (
     <div className="relative h-screen bg-cover bg-center">
-      
+       
       <div className="absolute inset-0 bg-black opacity-60">
+        
         <img className="w-full h-full object-cover" src={Hiking} alt="Hiking" />
       </div>
+      <Navbar/>
       <div className="relative  mx-auto flex flex-col justify-end h-full px-6 py-20 text-white">
         <div className="flex justify-between items-center">
           <div className=" max-w-xl">

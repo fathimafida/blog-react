@@ -8,7 +8,7 @@ const initialState ={
 }
 
 export const getUser = createAsyncThunk("auth/getUser", async () => {
-    const response = await axios.get("http://blog_livewire.test/api/login")
+    const response = await axios.post("http://blog_livewire.test/api/login")
     const data = await response.json();
     return data;
 })
