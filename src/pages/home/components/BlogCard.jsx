@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
+
 const BlogCard = ({ blog }) => {
+  const authState = useSelector((state) => state.auth.user);
   return (
     <div className="max-w-md  bg-white rounded-xl shadow-sm overflow-hidden relative">
       <div className="absolute top-3 left-3 bg-black opacity-40 px-3 py-1 rounded-2xl text-white">
@@ -27,7 +30,7 @@ const BlogCard = ({ blog }) => {
             src={blog.image_url}
             alt="Author"
           />
-          <h2 className="text-gray-800 text-lg">Fathima fida k</h2>
+          <h2 className="text-gray-800 text-lg">{authState?.user.name}</h2>
         </div>
       </div>
     </div>

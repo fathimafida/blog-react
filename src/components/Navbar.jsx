@@ -34,7 +34,7 @@ const Navbar = () => {
         >
           Login
         </Button>
-        <Button onClick={() => navigate("/login")} className="text-lg">
+        <Button onClick={() => navigate("/register")} className="text-lg">
           Sign Up
         </Button>
       </div>

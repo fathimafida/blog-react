@@ -9,5 +9,6 @@ const store = configureStore({
         blog: BlogSlice,
         auth:AuthSlice
     },
+    devTools: true
 });
 export default store
