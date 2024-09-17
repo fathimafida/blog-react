@@ -8,7 +8,7 @@ const BlogCard = ({ blog }) => {
         Destination
       </div>
       <img
-        className="h-30  w-full object-cover rounded-xl"
+        className="h-52  w-full object-cover rounded-xl"
         src={blog.image_url}
         alt="image"
       />
@@ -30,7 +30,7 @@ const BlogCard = ({ blog }) => {
             src={blog.image_url}
             alt="Author"
           />
-          <h2 className="text-gray-800 text-lg">{authState?.user.name}</h2>
+          <h2 className="text-gray-800 text-lg">{blog.author}</h2>
         </div>
       </div>
     </div>

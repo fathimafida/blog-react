@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import BlogCard from "./components/BlogCard";
 import { useEffect, useState } from "react";
-import { getBlogList } from "../../redux/slice/BlogSlice";
+import { addBlogs, getBlogList } from "../../redux/slice/BlogSlice";
 import Hiking from "../../assets/hiking2.jpeg";
 import { Button } from "@nextui-org/button";
-import { CgAdd } from "react-icons/cg";
-import { IoAdd } from "react-icons/io5";
+
+
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/modal";
 import { logOut } from "../../redux/slice/AuthSlice";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const HeroSection = () => {
   const blogState = useSelector((state) => state.blog);
   const accessToken = useSelector((state) => state.auth.user?.token);
   const [isOpen,onOpenChange]=useState(false)
-  const [blogData, setBlogData] = useState([]);
+  const [blogData, setBlogData] = useState(false);
   const dispatch = useDispatch();
   // const userState = useSelector((state) => state.auth.user);
 const navigate = useNavigate ();
@@ -32,6 +32,29 @@ const navigate = useNavigate ();
     );
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const title = e.target.title.value;
+    const description = e.target.description.value;
+    const author = e.target.author.value;
+    const image_url = e.target.image_url.value;
+   
+    try {
+     await dispatch(addBlogs({
+        title:title,
+        description:description,
+        author:author,
+        image_url:image_url
+      })).unwrap();
+    toast("Blog added successfully")
+    navigate("/hero")
+    } catch (error) {
+      toast(error.message)
+    }
+
+
+   
+  };
   return (
     <div className="h-screen bg-cover bg-center">
       <div className="flex flex-col px-6 ">
@@ -103,7 +126,17 @@ const navigate = useNavigate ();
       <>
         <ModalHeader className="flex flex-col gap-1">Add New Blog</ModalHeader>
         <ModalBody>
-          <form >
+          <form 
+          onClick={
+         
+          ()=>{
+            handleSubmit
+          }
+
+          
+          }
+          
+          id="add-blog-form" className="space-y-6" method="POST">
             <div className="flex flex-col gap-4">
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700">
@@ -156,7 +189,7 @@ const navigate = useNavigate ();
                   id="image"
                   name="image"
                   className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:text-sm file:font-semibold file:bg-white hover:file:bg-gray-50"
-                  accept="image/*"
+
                   required
                 />
               </div>
@@ -167,7 +200,7 @@ const navigate = useNavigate ();
           <Button color="danger" variant="light" onPress={onClose}>
             Cancel
           </Button>
-          <Button color="primary">
+          <Button form="add-blog-form" type="submit"  color="primary">
             Add Blog
           </Button>
         </ModalFooter>

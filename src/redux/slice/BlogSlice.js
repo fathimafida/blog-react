@@ -14,12 +14,31 @@ export const getBlogList = createAsyncThunk("blog/getBlogList", async (token) =>
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data.blogs; // Adjust according to API response
+    return response.data.blogs; 
   } catch (error) {
     console.log(error);
     throw error;
   }
 });
+
+export const addBlogs = createAsyncThunk("blog/addBlogs", async (data) => {
+  try {
+    const response = await axios.post("http://blog_livewire.test/api/add-blogs", {
+ data
+      ,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+   
+  );
+    return response.data;
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }}
+);
 
 const blogSlice = createSlice({
   name: "blog",
