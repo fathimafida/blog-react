@@ -37,17 +37,17 @@ const navigate = useNavigate ();
     const title = e.target.title.value;
     const description = e.target.description.value;
     const author = e.target.author.value;
-    const image_url = e.target.image_url.value;
+    // const image_url = e.target.image_url.value;
    
     try {
      await dispatch(addBlogs({
         title:title,
         description:description,
         author:author,
-        image_url:image_url
+        // image_url:image_url
       })).unwrap();
     toast("Blog added successfully")
-    navigate("/hero")
+    dispatch(getBlogList(accessToken))
     } catch (error) {
       toast(error.message)
     }
@@ -67,6 +67,7 @@ const navigate = useNavigate ();
            Add blog
            
           </Button>
+
             <img
             onClick={
               ()=>{
@@ -180,7 +181,7 @@ const navigate = useNavigate ();
                 ></textarea>
               </div>
 
-              <div>
+              {/* <div>
                 <label htmlFor="image" className="block text-sm font-medium text-gray-700">
                   Image
                 </label>
@@ -192,7 +193,7 @@ const navigate = useNavigate ();
 
                   required
                 />
-              </div>
+              </div> */}
             </div>
           </form>
         </ModalBody>

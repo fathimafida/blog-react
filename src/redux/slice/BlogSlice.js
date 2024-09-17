@@ -25,10 +25,10 @@ export const addBlogs = createAsyncThunk("blog/addBlogs", async (data) => {
   try {
     const response = await axios.post("http://blog_livewire.test/api/add-blogs", {
  data
-      ,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+      // ,
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      // },
     }
    
   );
