@@ -23,12 +23,11 @@ export const getBlogList = createAsyncThunk("blog/getBlogList", async (token) =>
 
 export const addBlogs = createAsyncThunk("blog/addBlogs", async (data) => {
   try {
-    const response = await axios.post("http://blog_livewire.test/api/add-blogs", {
- data
-      // ,
-      // headers: {
-      //   'Content-Type': 'multipart/form-data',
-      // },
+    const response = await axios.post("http://blog_livewire.test/api/add-blogs", data,{
+      headers: {
+        Authorization: `Bearer ${data.get("token")}`,
+        "Content-Type": "multipart/form-data",
+      }
     }
    
   );

@@ -21,11 +21,11 @@ const accessToken = useSelector((state) => state.auth.user?.token);
     const password = e.target.password.value;
 
     try {
-      if(accessToken){
+      
       await dispatch(loginWithEmailAndPassword({ email, password })).unwrap();
       toast.success("Login Successful");
       navigate("/hero");
-      }
+      
     } catch (error) {
       toast.error("Login failed: " + error.message);
     }

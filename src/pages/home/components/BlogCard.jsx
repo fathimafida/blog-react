@@ -1,11 +1,21 @@
+import { Button } from "@nextui-org/button";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
+import { HiDotsVertical, HiOutlineDotsVertical } from "react-icons/hi";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 const BlogCard = ({ blog }) => {
   const authState = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   return (
     <div className="max-w-md  bg-white rounded-xl shadow-sm overflow-hidden relative">
+
       <div className="absolute top-3 left-3 bg-black opacity-40 px-3 py-1 rounded-2xl text-white">
         Destination
+
+    
       </div>
       <img
         className="h-52  w-full object-cover rounded-xl"
@@ -20,7 +30,37 @@ const BlogCard = ({ blog }) => {
             10 mins read
           </h2>
         </div>
-        <h2 className="text-gray-800 text-2xl">{blog.title}</h2>
+      <div className="flex gap-3 items-center justify-between">
+      <h2 className="text-gray-800 text-2xl">{blog.title}</h2>
+
+     <Dropdown>
+      <DropdownTrigger>
+        <Button 
+        className="bg-transparent"
+        >
+<HiDotsVertical size={20} />
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu aria-label="Static Actions">
+
+  
+        <DropdownItem key="edit"><div className="flex items-center gap-2" onClick={()=>{
+          navigate(`/edit-blog/${blog._id}`)
+        }}>
+        <MdEdit />
+          <p> Edit</p>
+          </div></DropdownItem>
+
+        <DropdownItem key="delete" className="text-danger" color="danger">
+         <div className="flex items-center gap-2">
+         <MdDelete />
+          <p> Delete </p>
+          </div>
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+
+      </div>
         <h2 className="text-gray-500 text-[18px] font-normal break-words mb-4 line-clamp-2">
           {blog.description}
         </h2>

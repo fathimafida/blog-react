@@ -20,7 +20,7 @@ export const loginWithEmailAndPassword = createAsyncThunk(
       return response.data;
     } catch (error) {
       toast.error("Error during login: " + error.response?.data?.message || error.message);
-
+      throw error;
     }
   }
 );
@@ -52,9 +52,9 @@ const authSlice = createSlice({
     },
 
     loadUser: (state) => {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = localStorage.getItem("user");
       if (user) {
-        state.user = user;
+        state.user = JSON.parse(user);
       }
       state.status = "success";
     },
