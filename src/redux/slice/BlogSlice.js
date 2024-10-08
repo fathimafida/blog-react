@@ -5,6 +5,7 @@ const initialState = {
   blog: [],
   isLoading: false,
   isError: false,
+  selectedBlog: null,
 };
 
 export const getBlogList = createAsyncThunk("blog/getBlogList", async (token) => {
@@ -22,12 +23,14 @@ export const getBlogList = createAsyncThunk("blog/getBlogList", async (token) =>
 });
 
 export const addBlogs = createAsyncThunk("blog/addBlogs", async (data) => {
+
   try {
     const response = await axios.post("http://blog_livewire.test/api/add-blogs", data,{
       headers: {
         Authorization: `Bearer ${data.get("token")}`,
         "Content-Type": "multipart/form-data",
       }
+      
     }
    
   );
@@ -37,7 +40,24 @@ export const addBlogs = createAsyncThunk("blog/addBlogs", async (data) => {
     console.log(error);
     throw error;
   }}
+
 );
+
+export const getBlogDetails = createAsyncThunk("blog/getBlogDetails", async ({id, token}) => {
+  try {
+    const response = await axios.get(`http://blog_livewire.test/api/blogs/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
 
 const blogSlice = createSlice({
   name: "blog",
@@ -55,6 +75,30 @@ const blogSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
     });
+
+    builder.addCase(addBlogs.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(addBlogs.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.blog = action.payload;
+    });
+    builder.addCase(addBlogs.rejected, (state) => {
+      state.isLoading = false;
+      state.isError = true;
+    });
+
+    builder.addCase(getBlogDetails.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getBlogDetails.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.selectedBlog = action.payload;
+    });
+    builder.addCase(getBlogDetails.rejected, (state) => {
+      state.isLoading = false;
+      state.isError = true;
+    }); 
   },
 });
 

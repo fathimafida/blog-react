@@ -66,9 +66,13 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginWithEmailAndPassword.fulfilled, (state, action) => {
+        // after a successful login, the isLoading flag is set to false
+        // the user details are stored in the state
+        // the user details are also stored in the local storage
+        // so that the user remains logged in even after a refresh
         state.isLoading = false;
         state.user = action.payload;
-
+    
         localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(loginWithEmailAndPassword.rejected, (state, action) => {

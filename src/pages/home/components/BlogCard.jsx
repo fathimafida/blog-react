@@ -1,16 +1,20 @@
 import { Button } from "@nextui-org/button";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
-import { HiDotsVertical, HiOutlineDotsVertical } from "react-icons/hi";
+import { HiDotsVertical,  } from "react-icons/hi";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { useSelector } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 
 
+
 const BlogCard = ({ blog }) => {
-  const authState = useSelector((state) => state.auth.user);
+
   const navigate = useNavigate();
+
   return (
-    <div className="max-w-md  bg-white rounded-xl shadow-sm overflow-hidden relative">
+    <div onClick={()=>{
+    navigate(`/blog/${blog.id}`);
+    }} className="max-w-md  bg-white rounded-xl shadow-sm overflow-hidden relative">
 
       <div className="absolute top-3 left-3 bg-black opacity-40 px-3 py-1 rounded-2xl text-white">
         Destination

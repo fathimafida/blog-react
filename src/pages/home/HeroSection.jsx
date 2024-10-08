@@ -15,16 +15,17 @@ import {
 import { logOut } from "../../redux/slice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useAuth } from "../../hook/use-auth";
+
 const HeroSection = () => {
   const blogState = useSelector((state) => state.blog);
   const accessToken = useSelector((state) => state.auth.user?.token);
-  const user = useAuth();
+
   const [isOpen, onOpenChange] = useState(false);
   const [blogData, setBlogData] = useState(false);
   const dispatch = useDispatch();
   // const userState = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (accessToken) {
       dispatch(getBlogList(accessToken));
@@ -42,7 +43,7 @@ const HeroSection = () => {
     const author = e.target.author.value;
     const image_url = e.target.image.files[0];
 
-    const formData = new FormData();
+  const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("author", author);

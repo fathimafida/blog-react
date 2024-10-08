@@ -25,7 +25,7 @@ const RegisterPage = () => {
 
       await dispatch(registerWithEmailAndPassword({ email, password,name } ,)).unwrap();
       toast.success("registered Successfully");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       toast.error("Register failed: " + error.message);
     }

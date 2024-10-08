@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { loadUser } from './redux/slice/AuthSlice'
 import EditBlog from './pages/edit/EditBlog'
+import BlogDetailPage from './pages/details/BlogDetails'
 
 
 
@@ -43,6 +44,8 @@ function App() {
     <Route path="/signup" element={<BlogHome/>}/>
     <Route path="/register" element={<RegisterPage/>}/>
     <Route path='/edit-blog/:id' element={<EditBlog/>}/>
+    <Route path="/blog/:id" element={<BlogDetailPage />} />
+
     </Routes>
 
 
