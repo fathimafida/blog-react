@@ -1,105 +1,105 @@
 import { Button } from '@nextui-org/button'
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/modal'
-import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { editBlog } from '../../redux/slice/BlogSlice';
+import { toast } from 'sonner';
+import { form } from 'framer-motion/client';
 
-const EditBlog = () => {
-    const[editOpen,setEditOpen] = useState(false)
+
+
+
+const EditBlog = ({blog}) => {
+const dispatch = useDispatch();
+const accessToken = useSelector((state) => state.auth.user?.token);
   return (
 <div>
-<Modal isOpen={editOpen} onOpenChange={setEditOpen}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Edit Blog
-              </ModalHeader>
-              <ModalBody>
-                <form
-                onSubmit={()=>{}}
-                  id="add-blog-form"
-                  className="space-y-6"
-                  method="POST"
-                >
-                  <div className="flex flex-col gap-4">
-                    <div>
-                      <label
-                        htmlFor="title"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Title
-                      </label>
-                      <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        placeholder="Enter blog title"
-                        required
-                      />
-                    </div>
+ 
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          const title = e.target.title.value
+          const description = e.target.description.value
+          const author = e.target.author.value
+          const image_url = e.target.image.files[0]
+           const formData = new FormData();
+          formData.append("title", title);
+          formData.append("description", description);
+          formData.append("author", author);
+          formData.append("image", image_url);
+          formData.append("id", blog.id);
+          formData.append("token", accessToken);
+          try {
+            dispatch(editBlog({formData}))
+          } catch (error) {
+            toast(error.message)
+          }
 
-                    <div>
-                      <label
-                        htmlFor="author"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Author
-                      </label>
-                      <input
-                        type="text"
-                        id="author"
-                        name="author"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        placeholder="Enter author name"
-                        required
-                      />
-                    </div>
+        }}
+        className="space-y-6 p-6 justify-center items-center"
+        method="POST"
+        id='edit-blog'
+      >
+        <div className="flex flex-col gap-4">
+          <div>
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              placeholder="Enter blog title"
+              required
+              defaultValue={blog?.title}
+            />
+          </div>
 
-                    <div>
-                      <label
-                        htmlFor="description"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Description
-                      </label>
-                      <textarea
-                        id="description"
-                        name="description"
-                        rows="4"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        placeholder="Enter blog description"
-                        required
-                      ></textarea>
-                    </div>
+          <div>
+            <label
+              htmlFor="author"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Author
+            </label>
+            <input
+              type="text"
+              id="author"
+              name="author"
+              className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              placeholder="Enter author name"
+              required
+              defaultValue={blog?.author}
+            />
+          </div>
 
-                    {/* <div>
-                <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-                  Image
-                </label>
-                <input
-                  type="file"
-                  id="image"
-                  name="image"
-                  className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:text-sm file:font-semibold file:bg-white hover:file:bg-gray-50"
+          <div>
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              className="mt-1 block w-full p-2  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              placeholder="Enter blog description"
+              required
+              defaultValue={blog?.description}
+            ></textarea>
+          </div>
 
-                  required
-                />
-              </div> */}
-                  </div>
-                </form>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Cancel
-                </Button>
-                <Button form="add-blog-form" type="submit" color="primary">
-                  Update Blog
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+          <div className="flex justify-center">
+            <Button type="submit" form='edit-blog' color="primary">
+              Update Blog
+            </Button>
+          </div>
+        </div>
+      </form>
 </div>
   )
 }

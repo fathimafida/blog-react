@@ -42,6 +42,24 @@ export const addBlogs = createAsyncThunk("blog/addBlogs", async (data) => {
   }}
 
 );
+export const editBlog = createAsyncThunk("blog/editBlog", async (data) => {
+  try {
+    const response = await axios.put(`http://blog_livewire.test/api/blogs/${data.get("id")}`, data,{
+      headers: {
+        Authorization: `Bearer ${data.get("token")}`,
+        "Content-Type": "multipart/form-data",
+      }
+      
+    }
+   
+  );
+    return response.data;
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+})
 
 export const getBlogDetails = createAsyncThunk("blog/getBlogDetails", async ({id, token}) => {
   try {
@@ -99,6 +117,17 @@ const blogSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
     }); 
+    builder.addCase(editBlog.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(editBlog.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.selectedBlog = action.payload;
+    });
+    builder.addCase(editBlog.rejected, (state) => {
+      state.isLoading = false;
+      state.isError = true;
+    });
   },
 });
 

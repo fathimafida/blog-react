@@ -43,7 +43,7 @@ function App() {
     <Route  path="/hero" element={<HeroSection/>}/>
     <Route path="/signup" element={<BlogHome/>}/>
     <Route path="/register" element={<RegisterPage/>}/>
-    <Route path='/edit-blog/:id' element={<EditBlog/>}/>
+    <Route path='/update-blogs/:id' element={<EditBlog/>}/>
     <Route path="/blog/:id" element={<BlogDetailPage />} />
 
     </Routes>

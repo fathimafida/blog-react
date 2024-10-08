@@ -42,14 +42,14 @@ const BlogCard = ({ blog }) => {
         <Button 
         className="bg-transparent"
         >
-<HiDotsVertical size={20} />
+       <HiDotsVertical size={20} />
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
 
   
         <DropdownItem key="edit"><div className="flex items-center gap-2" onClick={()=>{
-          navigate(`/edit-blog/${blog._id}`)
+          navigate(`/update-blogs/${blog.id}`);
         }}>
         <MdEdit />
           <p> Edit</p>
