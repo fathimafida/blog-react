@@ -2,7 +2,7 @@ import { Button } from '@nextui-org/button'
 import { useDispatch, useSelector } from 'react-redux'
 import { editBlog } from '../../redux/slice/BlogSlice';
 import { toast } from 'sonner';
-import { form } from 'framer-motion/client';
+
 
 
 
@@ -92,7 +92,7 @@ const accessToken = useSelector((state) => state.auth.user?.token);
               defaultValue={blog?.description}
             ></textarea>
           </div>
-
+<div className='flex gap-2'>Nothing</div>
           <div className="flex justify-center">
             <Button type="submit" form='edit-blog' color="primary">
               Update Blog
